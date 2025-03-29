@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" charset="utf-8" />
+    <title>Emerald anims</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <h1>Pokémon Emerald sprite animations viewer</h1>
+    <section id="rest-page">
+        <section id="section-menu">
+            <label for="dropdown">Select a sprite:</label>
+            <div id="select-div">
+                <select id="dropdown">
+                    <option value="diglett">Diglett</option>
+                    <option value="dodrio">Dodrio</option>
+                    <option value="heracross">Heracross</option>
+                    <option value="pidgeot">Pidgeot</option>
+                    <option value="pikachu">Pikachu</option>
+                    <option value="tyranitar">Tyranitar</option>
+                    <option value="salamence">Salamence</option>
+                    <option value="rapidash" selected>Rapidash</option>
+                    <option value="persian">Persian</option>
+                    <option value="sunkern">Sunkern</option>
+                    <option value="unown">Unown</option>
+                    <option value="glalie">Glalie</option>
+                </select>
+                <button id="btn-anim">Play</button>
+            </div>
+        </section>
+        <div id="img-container">
+            <img src="./assets/rapidash1.png" alt="pokemon_sprite" id="pokemon-sprite">
+        </div>
+        <span id="frame-counter">0</span>
+    </section>
+    <script src="./app.js"></script>
+    <script src="./load.js"></script>
+</body>
+</html>
