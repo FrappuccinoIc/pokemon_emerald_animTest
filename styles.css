@@ -7,34 +7,38 @@ body {
     align-items: center;
     background-color: #97c3e9;
     color: white;
+    gap: 1em;
 }
 
-#rest-page {
-    width: 39rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-#section-menu {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 8em;
-    margin-right: 4em;
+#frame-counter {
+    font-size: 2rem;
+    color: black;
+    font-weight: 800;
+    position: absolute;
+    align-self: end;
+    margin: 50vh 3rem;
 }
 
 h1 {
-    margin: 1px 0px 22vh;
-    display: flex;
+    font-size: 3.5vw;
+    margin: 1px 0px;
+}
+
+canvas {
+    display: inline-block;
+    width: 16rem;
+    aspect-ratio: 1/1;
+    border: 0.25rem solid black;
+    /*  */
+    padding: 7rem;
 }
 
 #img-container {
+    /* 1rem = 4px */
     display: inline-block;
     width: 16rem;
     height: 16rem;
     border: 0.25rem solid black;
-    border-radius: 1px;
     /* padding: 7rem; */
     /* background: repeating-linear-gradient(
         to right,
@@ -53,13 +57,23 @@ img {
     position: relative;
 }
 
-#frame-counter {
-    margin-left: 750px;
-    font-size: 2rem;
-    color: black;
-    font-weight: 800;
-    position: fixed;
+#rest-page {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
 }
+
+#section-menu {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8em;
+}
+
+
+
+
 
 .color-yellow {
     filter: brightness(0) saturate(100%) invert(92%) sepia(99%) saturate(1937%) hue-rotate(348deg) brightness(105%) contrast(105%);
