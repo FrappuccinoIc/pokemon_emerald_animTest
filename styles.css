@@ -14,9 +14,10 @@ body {
     font-size: 2rem;
     color: black;
     font-weight: 800;
+    margin-top: 20vw;
     position: absolute;
     align-self: end;
-    margin: 50vh 3rem;
+    margin-right: 30vw;
 }
 
 h1 {
@@ -58,11 +59,13 @@ img {
 }
 
 #rest-page {
-    width: 100%;
+    width: 40%;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    gap: 8vw;
+    justify-content: start;
     align-items: center;
+    margin: 20vh 10vw;
 }
 
 #section-menu {
@@ -70,9 +73,6 @@ img {
     flex-direction: column;
     margin-bottom: 8em;
 }
-
-
-
 
 
 .color-yellow {

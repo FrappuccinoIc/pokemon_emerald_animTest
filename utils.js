@@ -259,9 +259,9 @@ const gSineTable = [
 ];
 
 function calcSin(index) {
-    return gSineTable[index % 256];
+    return gSineTable[Math.floor(index) % 256];
 }
 
 function calcCos(index) {
-    return gSineTable[(index + 64) % 256];
+    return gSineTable[(Math.floor(index) + 64) % 256];
 }
