@@ -8,6 +8,11 @@
 </head>
 <body>
     <h1>Pokémon Emerald sprite animations viewer</h1>
+    <span id="frame-counter">0</span>
+    <canvas id="render-view"></canvas>
+    <div id="img-container">
+        <img src="./assets/heracross1.png" alt="pokemon_sprite" id="pokemon-sprite">
+    </div>
     <section id="rest-page">
         <section id="section-menu">
             <label for="dropdown">Select a sprite:</label>
@@ -15,7 +20,7 @@
                 <select id="dropdown">
                     <option value="diglett">Diglett</option>
                     <option value="dodrio">Dodrio</option>
-                    <option value="heracross">Heracross</option>
+                    <option value="heracross" selected>Heracross</option>
                     <option value="pidgeot">Pidgeot</option>
                     <option value="pikachu">Pikachu</option>
                     <option value="tyranitar">Tyranitar</option>
@@ -38,5 +43,6 @@
     <script src="./utils.js"></script>
     <script src="./app.js"></script>
     <script src="./load.js"></script>
+    <script src="./app.js"></script>
 </body>
 </html>
