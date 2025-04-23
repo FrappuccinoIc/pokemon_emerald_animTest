@@ -26,7 +26,7 @@ function selectSprite() {
     timelineFrame = 0
     frameCounter.innerHTML = timelineFrame
     selectedValue = dropMenu.value;
-    pokemonSprite.src = `./assets/${selectedValue}1.png`
+    pokemonSprite.src = `./assets/${selectedValue}_1.png`
     pokemonToCall = pokemonCollection.find(pkmn => pkmn.name == selectedValue)
 }
 
@@ -78,7 +78,7 @@ function animHShake(dly = 0) {
         return
     }
     pixelUnit = pokemonSprite.width * pixelToSpriteRatio
-    spritePositionOffsetX = Math.sin(animFrame * 60 % 256) * 3
+    spritePositionOffsetX = calcSin(animFrame * 60) * 2
     pokemonSprite.style.left = `${Math.floor(spritePositionOffsetX + 0.5) * pixelUnit}px`
 }
 function animVShake(dly = 0) {
@@ -89,7 +89,7 @@ function animVShake(dly = 0) {
         return
     }
     pixelUnit = pokemonSprite.width * pixelToSpriteRatio
-    spritePositionOffsetY = Math.sin(animFrame * 60 % 256) * 3
+    spritePositionOffsetY = calcSin(animFrame * 60) * 2
     pokemonSprite.style.top = `${Math.floor(spritePositionOffsetY + 0.5) * pixelUnit}px`
 }
 function animLungeGrow(dly = 0) {
@@ -118,11 +118,14 @@ function animFrontFlip(dly = 0) {
 function animCircularVibrate(dly = 0) {
     pixelUnit = pokemonSprite.width * pixelToSpriteRatio
     const animFrame = timelineFrame - dly
+    if(animFrame < 0 || animFrame > 56) return
     changeBoolY = ![16,31,44].some((frame) => frame === animFrame) ? changeBoolY * -1 : changeBoolY
     changeBoolX = ![24, 37].some((frame) => frame === animFrame) ? changeBoolX * -1 : changeBoolX
     spritePositionOffsetY += calcCircularVibrateOffset(animFrame, [31, 16], [36, 22], [39, 25, 12], [44, 32, 14], [44, 6], [50, 13], [50], [58])
     spritePositionOffsetX += calcCircularVibrateOffset(animFrame, [37, 24, 9], [41, 29, 13], [49, 32, 18], [52, 37, 23], [41, 13], [43, 17], [43], [49])
     
+    console.log(`AnimFrame: ${animFrame}. updAnimFrame: ${animFrame * 9}. X: ${spritePositionOffsetX}. Y: ${spritePositionOffsetY}. changeBool: ${(changeBoolX == true)}`)
+
     pokemonSprite.style.left = `${Math.floor(spritePositionOffsetX) * changeBoolX * pixelUnit}px`
     pokemonSprite.style.top = `${Math.floor(spritePositionOffsetY) * changeBoolY * pixelUnit}px`
 }
@@ -154,16 +157,15 @@ function calcCircularVibrateOffset(currentFrame, arrAddGradualMore, arrAddGradua
 }
 function animCircularVibrate_2(dly = 0) {
     const animFrame = timelineFrame - dly
-    if(animFrame < 0) return
-    else if(animFrame == 1) console.clear()
+    if(animFrame < 0 || animFrame > 56) return
+    //else if(animFrame == 1) console.clear()
     const updAnimFrame = animFrame * 9
     pixelUnit = pokemonSprite.width * pixelToSpriteRatio
-    changeBoolX = animFrame % 2 == 1 ? 1 : -1
-    const amplitude = Math.sin(updAnimFrame * 0.25) * 8
-    const index = updAnimFrame % 256
-    spritePositionOffsetY = Math.sin(index) * amplitude * changeBoolX
-    spritePositionOffsetX = Math.cos(index) * amplitude * changeBoolX
-    //console.log(`AnimFrame: ${animFrame}. updAnimFrame: ${updAnimFrame}. X: ${spritePositionOffsetX.toFixed(3)}. Y: ${spritePositionOffsetY.toFixed(3)}. changeBool: ${changeBoolX}`)
+    changeBoolX = updAnimFrame % 2 == 1 ? 1 : -1
+    const amplitude = calcSin(Math.floor(updAnimFrame * 0.25)) * 8
+    spritePositionOffsetY = Math.round(calcSin(updAnimFrame) * amplitude) * changeBoolX
+    spritePositionOffsetX = Math.round(calcCos(updAnimFrame) * amplitude) * changeBoolX
+    console.log(`AnimFrame: ${animFrame}. updAnimFrame: ${updAnimFrame}. X: ${spritePositionOffsetX}. Y: ${spritePositionOffsetY}. changeBool: ${(changeBoolX == true)}`)
     pokemonSprite.style.left = `${spritePositionOffsetX * pixelUnit}px`
     pokemonSprite.style.top = `${spritePositionOffsetY * pixelUnit}px`
 }
