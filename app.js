@@ -39,7 +39,7 @@ btnSpriteAnim.addEventListener('click', function() {
     selectedValue = dropMenu.value;
     pokemonSprite.src = `./assets/${selectedValue}_1.png`
     pokemonToCall = pokemonCollection.find(pkmn => pkmn.name == selectedValue)
-}
+})
 
 function playPkmnCry(pokemon) {
     pokemon.cry.pause()
