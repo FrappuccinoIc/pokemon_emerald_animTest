@@ -93,10 +93,12 @@ function animVShake(dly = 0) {
     pokemonSprite.style.top = `${Math.floor(spritePositionOffsetY + 0.5) * pixelUnit}px`
 }
 function animLungeGrow(dly = 0) {
-    if(timelineFrame - dly < 0 || timelineFrame - dly > 66) return
+    const animFrame = timelineFrame - dly
+    if(animFrame - dly < 0 || animFrame - dly > 66) return
     pixelUnit = pokemonSprite.width * pixelToSpriteRatio
 
-    sineValue = parseFloat(Math.sin( ((timelineFrame % 33)*(60 / 11)) * (Math.PI / 180) ).toFixed(2))
+    sineValue = parseFloat(Math.sin( ((animFrame % 33)*(60 / 11)) * (Math.PI / 180) ).toFixed(2))
+    //sineValue = calcSin(Math.floor(animFrame * 3.878787) % 128)
     spritePositionOffsetX = sineValue * (-64/3)
     spritePositionOffsetY = sineValue * (-64/12)
     spriteScale = (sineValue/3) + 1
@@ -155,20 +157,28 @@ function calcCircularVibrateOffset(currentFrame, arrAddGradualMore, arrAddGradua
     }
     return offsetResult
 }
+
 function animCircularVibrate_2(dly = 0) {
     const animFrame = timelineFrame - dly
     if(animFrame < 0 || animFrame > 56) return
     //else if(animFrame == 1) console.clear()
+
     const updAnimFrame = animFrame * 9
     pixelUnit = pokemonSprite.width * pixelToSpriteRatio
+
     changeBoolX = updAnimFrame % 2 == 1 ? 1 : -1
-    const amplitude = calcSin(Math.floor(updAnimFrame * 0.25)) * 8
-    spritePositionOffsetY = Math.round(calcSin(updAnimFrame) * amplitude) * changeBoolX
-    spritePositionOffsetX = Math.round(calcCos(updAnimFrame) * amplitude) * changeBoolX
-    console.log(`AnimFrame: ${animFrame}. updAnimFrame: ${updAnimFrame}. X: ${spritePositionOffsetX}. Y: ${spritePositionOffsetY}. changeBool: ${(changeBoolX == true)}`)
+
+    const amplitude = calcSin(updAnimFrame * 0.25) * 8
+
+    spritePositionOffsetY = Math.round(calcSin((256 * ((Math.floor(updAnimFrame / 256)) + 1)) - updAnimFrame) * amplitude) * changeBoolX
+    spritePositionOffsetX = Math.round(calcCos((256 * ((Math.floor(updAnimFrame / 256)) + 1)) - updAnimFrame) * amplitude) * changeBoolX
+
     pokemonSprite.style.left = `${spritePositionOffsetX * pixelUnit}px`
     pokemonSprite.style.top = `${spritePositionOffsetY * pixelUnit}px`
+
+    console.log(`AnimFrame: ${animFrame}. updAnimFrame: ${updAnimFrame}. X: ${spritePositionOffsetX}. Y: ${spritePositionOffsetY}. changeBool: ${(changeBoolX == true)}`)
 }
+
 function animZigzagFast(dly = 0) {
     const animFrame = timelineFrame - dly
     if(animFrame < 1 || animFrame > 75) return
