@@ -93,18 +93,41 @@ function animVShake(dly = 0) {
     pokemonSprite.style.top = `${Math.floor(spritePositionOffsetY + 0.5) * pixelUnit}px`
 }
 function animLungeGrow(dly = 0) {
-    const animFrame = timelineFrame - dly
-    if(animFrame - dly < 0 || animFrame - dly > 66) return
+    let animFrame = timelineFrame - dly
+    if(animFrame < 0 || animFrame > 64) return
     pixelUnit = pokemonSprite.width * pixelToSpriteRatio
 
-    sineValue = parseFloat(Math.sin( ((animFrame % 33)*(60 / 11)) * (Math.PI / 180) ).toFixed(2))
-    //sineValue = calcSin(Math.floor(animFrame * 3.878787) % 128)
-    spritePositionOffsetX = sineValue * (-64/3)
-    spritePositionOffsetY = sineValue * (-64/12)
-    spriteScale = (sineValue/3) + 1
+    let sineValue = calcSin(Math.floor(animFrame * 4) % 128)
+    spritePositionOffsetX = sineValue * -20
+    spritePositionOffsetY = sineValue * -6
+    spriteScale = 1 + (sineValue * 1/3)
+
     pokemonSprite.style.left = `${spritePositionOffsetX * pixelUnit}px`
     pokemonSprite.style.top = `${spritePositionOffsetY * pixelUnit}px`
     pokemonSprite.style.width = `${spriteScale * 16}rem`
+}
+function animKabukiJumps(dly = 0) {
+    let animFrame = timelineFrame - dly
+    if(animFrame < 0 || animFrame > 128) return
+
+    let bigSine = 0;
+    if(animFrame < 86) bigSine = calcSin(animFrame % 128);
+    else if(animFrame < 107) bigSine = calcSin((calcSin(animFrame) * 128) - 64 % 128);
+    
+    let sineValue = animFrame < 64? calcSin((animFrame * 6) % 128) : 0;
+    spriteScale = 1 + (bigSine * 1/3)
+    spritePositionOffsetX = bigSine * -32;
+    spritePositionOffsetY = bigSine * 8 + sineValue * -32;
+
+    spriteRotateOffset = 0;
+    if(animFrame < 16) spriteRotateOffset = animFrame / 16 * -11.25;
+    else if(animFrame >= 16 && animFrame < 58) spriteRotateOffset = -11.25;
+    else if(animFrame >= 58 && animFrame < 107) spriteRotateOffset = calcSin((animFrame - 52) * 2.32 % 128) * -33.75;
+    
+    pokemonSprite.style.left = `${spritePositionOffsetX * pixelUnit}px`
+    pokemonSprite.style.top = `${spritePositionOffsetY * pixelUnit}px`
+    pokemonSprite.style.width = `${spriteScale * 16}rem`
+    pokemonSprite.style.rotate = `${spriteRotateOffset}deg`
 }
 function animFrontFlip(dly = 0) {
     const animFrame = timelineFrame - dly
