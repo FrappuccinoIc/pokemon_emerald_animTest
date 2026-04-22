@@ -16,7 +16,7 @@ class Pokemon {
 const diglett =   new Pokemon('diglett', './assets/diglett_1.png', './assets/diglett_2.png',      animVShake,           new Audio('./assets/cries/050.wav'), 66,  [1,66], [26], 25)
 const dodrio =    new Pokemon('dodrio', './assets/dodrio_1.png', './assets/dodrio_2.png',         animLungeGrow,        new Audio('./assets/cries/085.wav'), 104, [1,25,49,73,96], [13,37,61,85])
 const heracross = new Pokemon('heracross', './assets/heracross_1.png', './assets/heracross_2.png',animLungeGrow,        new Audio('./assets/cries/214.wav'), 66,  [1,22,42], [12,32])
-const shiftry = new Pokemon('shiftry', './assets/shiftry_1.png', './assets/shiftry_2.png',        animKabukiJumps,     new Audio('./assets/cries/275.wav'), 106,  [1,22,42], [12,32])
+const shiftry = new Pokemon('shiftry', './assets/shiftry_1.png', './assets/shiftry_2.png',        animKabukiJumps,     new Audio('./assets/cries/275.wav'), 106,  [1,9,24,54], [4,14,34])
 const hariyama = new Pokemon('hariyama', './assets/hariyama_1.png', './assets/hariyama_2.png',    animKabukiJumps,     new Audio('./assets/cries/297.wav'), 110,  [21], [1, 93])
 const pidgeot =   new Pokemon('pidgeot', './assets/pidgeot_1.png', './assets/pidgeot_2.png',      animFrontFlip,        new Audio('./assets/cries/018.wav'), 46,  [21,46], [1,31])
 const pikachu =   new Pokemon('pikachu', './assets/pikachu_1.png', './assets/pikachu_2.png',      animFlashYellow,      new Audio('./assets/cries/025.wav'), 85,  [1,36,71], [16,51])

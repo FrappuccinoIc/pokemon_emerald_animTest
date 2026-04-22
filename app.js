@@ -64,11 +64,16 @@ function animFlashYellow(dly = 0) {
     ) pokemonSprite.classList.toggle('color-yellow')
 }
 function animJumpsSmall(dly = 0) {
-    switch (timelineFrame) {
-        case 1 + dly: 
-            pokemonSprite.classList.add('anim-jumps-small')
-            break;
-    }
+    const animFrame = (timelineFrame - dly) * 12;
+    if(animFrame < 0 || animFrame > 384) return; // Ends in frame 32. 
+
+    pixelUnit = pokemonSprite.width * pixelToSpriteRatio
+
+    if((animFrame / 128) < 2) {
+        spritePositionOffsetY = -(calcSin(animFrame % 128) * 6)
+    } else spritePositionOffsetY = -(calcSin(animFrame % 128) * 9)
+
+    pokemonSprite.style.top = `${spritePositionOffsetY * pixelUnit}px`
 }
 function animHShake(dly = 0) {
     const animFrame = timelineFrame - dly
@@ -108,14 +113,14 @@ function animLungeGrow(dly = 0) {
 }
 function animKabukiJumps(dly = 0) {
     let animFrame = timelineFrame - dly
-    if(animFrame < 0 || animFrame > 128) return
+    if(animFrame < 0 || animFrame > 106) return
 
     let bigSine = 0;
     if(animFrame < 86) bigSine = calcSin(animFrame % 128);
     else if(animFrame < 107) bigSine = calcSin((calcSin(animFrame) * 128) - 64 % 128);
     
     let sineValue = animFrame < 64? calcSin((animFrame * 6) % 128) : 0;
-    spriteScale = 1 + (bigSine * 1/3)
+    spriteScale = 1 + (bigSine * 1/4)
     spritePositionOffsetX = bigSine * -32;
     spritePositionOffsetY = bigSine * 8 + sineValue * -32;
 
@@ -148,8 +153,6 @@ function animCircularVibrate(dly = 0) {
     changeBoolX = ![24, 37].some((frame) => frame === animFrame) ? changeBoolX * -1 : changeBoolX
     spritePositionOffsetY += calcCircularVibrateOffset(animFrame, [31, 16], [36, 22], [39, 25, 12], [44, 32, 14], [44, 6], [50, 13], [50], [58])
     spritePositionOffsetX += calcCircularVibrateOffset(animFrame, [37, 24, 9], [41, 29, 13], [49, 32, 18], [52, 37, 23], [41, 13], [43, 17], [43], [49])
-    
-    console.log(`AnimFrame: ${animFrame}. updAnimFrame: ${animFrame * 9}. X: ${spritePositionOffsetX}. Y: ${spritePositionOffsetY}. changeBool: ${(changeBoolX == true)}`)
 
     pokemonSprite.style.left = `${Math.floor(spritePositionOffsetX) * changeBoolX * pixelUnit}px`
     pokemonSprite.style.top = `${Math.floor(spritePositionOffsetY) * changeBoolY * pixelUnit}px`
@@ -183,8 +186,7 @@ function calcCircularVibrateOffset(currentFrame, arrAddGradualMore, arrAddGradua
 
 function animCircularVibrate_2(dly = 0) {
     const animFrame = timelineFrame - dly
-    if(animFrame < 0 || animFrame > 56) return
-    //else if(animFrame == 1) console.clear()
+    if(animFrame < 8 || animFrame > 56) return
 
     const updAnimFrame = animFrame * 9
     pixelUnit = pokemonSprite.width * pixelToSpriteRatio
@@ -193,13 +195,11 @@ function animCircularVibrate_2(dly = 0) {
 
     const amplitude = calcSin(updAnimFrame * 0.25) * 8
 
-    spritePositionOffsetY = Math.round(calcSin((256 * ((Math.floor(updAnimFrame / 256)) + 1)) - updAnimFrame) * amplitude) * changeBoolX
-    spritePositionOffsetX = Math.round(calcCos((256 * ((Math.floor(updAnimFrame / 256)) + 1)) - updAnimFrame) * amplitude) * changeBoolX
+    spritePositionOffsetY = Math.round(calcSin(updAnimFrame) * amplitude) * changeBoolX
+    spritePositionOffsetX = -Math.round(calcCos(updAnimFrame) * amplitude) * changeBoolX
 
     pokemonSprite.style.left = `${spritePositionOffsetX * pixelUnit}px`
     pokemonSprite.style.top = `${spritePositionOffsetY * pixelUnit}px`
-
-    console.log(`AnimFrame: ${animFrame}. updAnimFrame: ${updAnimFrame}. X: ${spritePositionOffsetX}. Y: ${spritePositionOffsetY}. changeBool: ${(changeBoolX == true)}`)
 }
 
 function animZigzagFast(dly = 0) {
@@ -214,6 +214,19 @@ function animZigzagFast(dly = 0) {
 
     pokemonSprite.style.top = `${spritePositionOffsetY * pixelUnit}px`
     pokemonSprite.style.left = `${spritePositionOffsetX * pixelUnit}px`
+}
+
+function animVerticalStrech(dly = 0) {
+    const animFrame = timelineFrame - dly;
+    if(animFrame < 0 || animFrame > 40) return;
+
+    const index2 = (animFrame * 128) / 40;
+    const index1 = animFrame === 14 ? 1 : 0;
+
+    // SetAffineData necesita de 256 ?? será un entero 256?
+    // normal? affineX = Sin(index2, 16) + 256;   Valor positivo, también se suma 256
+    // flip? affinex = -(Sin(index2, 16)) - 256;  Valor negativo, también se RESTA 256
+    // Que pasa cuando usas un valor negativo con affine? Se dará vuelta? Será por eso que necesita de un 256 negativo añadido, para que se de vuelta y luego se extienda?
 }
 
 function dummyFunc(dly = 0) {
